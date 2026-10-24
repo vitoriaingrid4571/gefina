@@ -1,4 +1,4 @@
-type InvoiceStatus = 'pending' | 'paid';
+type InvoiceStatus = 'paid' | 'pending';
 
 interface Invoice {
   id: number;
@@ -18,44 +18,44 @@ const invoices: Invoice[] = [
     id: 1,
     amount: 125039,
     status: 'pending',
-    issueDate: '2026-10-07',
-    dueDate: '2026-11-05',
+    issueDate: '07-10-2026',
+    dueDate: '05-11-2026',
     customer: {
-      id: 1,
+      id: 2,
       name: 'Construtora Meridiano',
       email: 'contato@meridiano.com.br'
     }
   },
   {
     id: 2,
-    amount: 89000,
+    amount: 15340,
     status: 'paid',
-    issueDate: '2026-10-07',
-    dueDate: '2026-11-05',
+    issueDate: '03-09-2026',
+    dueDate: '05-10-2026',
     customer: {
-      id: 2,
-      name: 'Cliente Exemplo B',
-      email: 'contato@clienteb.com.br'
+      id: 1,
+      name: 'Gráfica Nova',
+      email: 'grafica@nova.com.br'
     }
   },
   {
     id: 3,
-    amount: 45050,
-    status: 'pending',
-    issueDate: '2026-10-07',
-    dueDate: '2026-11-05',
+    amount: 4504899,
+    status: 'paid',
+    issueDate: '01-09-2026',
+    dueDate: '01-10-2026',
     customer: {
       id: 3,
-      name: 'Cliente Exemplo C',
-      email: 'contato@clientec.com.br'
+      name: 'Todos por Um',
+      email: 'comercial@todosporum.com'
     }
   }
 ];
 
-export function findAllInvoices(): Invoice[] {
+export function findAllInvoices() {
   return invoices;
 }
 
-export function findInvoiceById(id: number): Invoice | undefined {
-  return invoices.find((invoice) => invoice.id === id);
+export function findInvoiceById(id: number) {
+  return invoices.find((element) => element.id === id);
 }

@@ -1,34 +1,65 @@
-<!doctype html>
+cd C:\Users\CLIENTE\gefina
+$service = @'
+type InvoiceStatus = 'paid' | 'pending';
 
-<html lang='pt-br'>
-    <head>
-        <meta charset='utf-8'>
-        <title>Gefina</title>
-    </head>
-    <body>
-        <div></div>
+interface Invoice {
+  id: number;
+  amount: number;
+  status: InvoiceStatus;
+  issueDate: string;
+  dueDate: string;
+  customer: {
+    id: number;
+    name: string;
+    email: string;
+  };
+}
 
-        <script
-            crossorigin
-            src='https://unpkg.com/react@18/umd/react.development.js'>
-        </script>
-        <script
-            crossorigin
-            src='https://unpkg.com/react-dom@18/umd/react-dom.development.js'>
-        </script>
-        <script
-            crossorigin
-            src='https://unpkg.com/@babel/standalone/babel.min.js'>
-        </script>
+const invoices: Invoice[] = [
+  {
+    id: 1,
+    amount: 125039,
+    status: 'pending',
+    issueDate: '07-10-2026',
+    dueDate: '05-11-2026',
+    customer: {
+      id: 2,
+      name: 'Construtora Meridiano',
+      email: 'contato@meridiano.com.br'
+    }
+  },
+  {
+    id: 2,
+    amount: 15340,
+    status: 'paid',
+    issueDate: '03-09-2026',
+    dueDate: '05-10-2026',
+    customer: {
+      id: 1,
+      name: 'Gráfica Nova',
+      email: 'grafica@nova.com.br'
+    }
+  },
+  {
+    id: 3,
+    amount: 4504899,
+    status: 'paid',
+    issueDate: '01-09-2026',
+    dueDate: '01-10-2026',
+    customer: {
+      id: 3,
+      name: 'Todos por Um',
+      email: 'comercial@todosporum.com'
+    }
+  }
+];
 
-        <script type='text/babel'>
-            const container = document.querySelector('div');
+export function findAllInvoices() {
+  return invoices;
+}
 
-            const root = ReactDOM.createRoot(container);
-
-            const title = <h1>React Course</h1>;
-
-            root.render(title);
-        </script>
-    </body>
-</html>
+export function findInvoiceById(id: number) {
+  return invoices.find((element) => element.id === id);
+}
+'@
+[System.IO.File]::WriteAllText("$PWD\api\invoice.service.ts", $service, (New-Object System.Text.UTF8Encoding $false))
