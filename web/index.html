@@ -1,65 +1,113 @@
-cd C:\Users\CLIENTE\gefina
-$service = @'
-type InvoiceStatus = 'paid' | 'pending';
+<!doctype html>
 
-interface Invoice {
-  id: number;
-  amount: number;
-  status: InvoiceStatus;
-  issueDate: string;
-  dueDate: string;
-  customer: {
-    id: number;
-    name: string;
-    email: string;
-  };
-}
+<html lang='pt-br'>
 
-const invoices: Invoice[] = [
-  {
-    id: 1,
-    amount: 125039,
-    status: 'pending',
-    issueDate: '07-10-2026',
-    dueDate: '05-11-2026',
-    customer: {
-      id: 2,
-      name: 'Construtora Meridiano',
-      email: 'contato@meridiano.com.br'
+<head>
+  <meta charset='utf-8'>
+  <title>Gefina</title>
+</head>
+
+<body>
+  <div></div>
+
+  <script crossorigin src='https://unpkg.com/react@18/umd/react.development.js'>
+  </script>
+  <script crossorigin src='https://unpkg.com/react-dom@18/umd/react-dom.development.js'>
+  </script>
+  <script crossorigin src='https://unpkg.com/@babel/standalone/babel.min.js'>
+  </script>
+
+  <script type='text/babel'>
+    const container = document.querySelector('div');
+
+    const root = ReactDOM.createRoot(container);
+
+    const invoices = [{
+        id: 1,
+        amount: 125039,
+        status: 'paid',
+        issueDate: '07-10-2026',
+        dueDate: '05-11-2026',
+        customer: {
+          id: 2,
+          name: 'Construtora Meridiano',
+          email: 'contato@meridiano.com.br'
+        }
+      },
+      {
+        id: 2,
+        amount: 15340,
+        status: 'paid',
+        issueDate: '03-09-2026',
+        dueDate: '05-10-2026',
+        customer: {
+          id: 1,
+          name: 'Gráfica Nova',
+          email: 'grafica@nova.com.br'
+        }
+      },
+      {
+        id: 3,
+        amount: 4504899,
+        status: 'paid',
+        issueDate: '01-09-2026',
+        dueDate: '01-10-2026',
+        customer: {
+          id: 3,
+          name: 'Todos por Um',
+          email: 'comercial@todosporum.com'
+        }
+      }
+    ];
+
+    function statusLabel(status) {
+      return status === 'Paid' ? ' Paga' : 'Pendente';
     }
-  },
-  {
-    id: 2,
-    amount: 15340,
-    status: 'paid',
-    issueDate: '03-09-2026',
-    dueDate: '05-10-2026',
-    customer: {
-      id: 1,
-      name: 'Gráfica Nova',
-      email: 'grafica@nova.com.br'
-    }
-  },
-  {
-    id: 3,
-    amount: 4504899,
-    status: 'paid',
-    issueDate: '01-09-2026',
-    dueDate: '01-10-2026',
-    customer: {
-      id: 3,
-      name: 'Todos por Um',
-      email: 'comercial@todosporum.com'
-    }
-  }
-];
 
-export function findAllInvoices() {
-  return invoices;
-}
+    const Title = () => {
+      return <h1>Faturas</h1>;
+    };
 
-export function findInvoiceById(id: number) {
-  return invoices.find((element) => element.id === id);
-}
-'@
-[System.IO.File]::WriteAllText("$PWD\api\invoice.service.ts", $service, (New-Object System.Text.UTF8Encoding $false))
+    const TableRow = (props) => {
+      return <tr>
+        <td>{props.data.customer.name}</td>
+        <td>{props.data.amount}</td>
+        <td>{props.data.issueDate}</td>
+        <td>{props.data.dueDate}</td>
+        <td>{statusLabel(props.data.status)}</td>
+      </tr>;
+    };
+
+    const Table = () => {
+      return <table>
+        <thead>
+          <tr>
+            <th>Cliente</th>
+            <th>Valor</th>
+            <th>Emissão</th>
+            <th>Vencimento</th>
+            <th>Situação</th>
+          </tr>
+        </thead>
+        <tbody>
+          {invoices.map((invoice) => {
+            return <TableRow
+             key={invoice.id}
+             data={invoice} />;
+          })}
+        </tbody>
+      </table>;
+    };
+
+    const App = () => {
+      return <>
+        <Title />
+        <Table />
+      </>;
+    }
+
+    root.render(<App/>);
+  </script>
+</body>
+
+</html>
